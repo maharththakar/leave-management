@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Material icons cdn  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- css -->
+
+    <link rel="stylesheet" href="../static/css/leave-status.css">
+
+<script> //for redirection
+    function redirectToPending() {
+        window.location.href = "{% url 'leave_status_pending' %}";
+    }
+
+    function redirectToRejected() {
+            window.location.href = "{% url 'leave_status_rejected' %}";
+    }
+    setTimeout(function(){
+            if ($('#msg').length > 0) {
+                $('#msg').remove();
+            }
+    }, 1500)    // 2000 millisecond
+</script>
+    <title>Dashboard</title>
+</head>
+{% if messages %}
+<div class="messages" id="msg">
+  {% for mess in messages %}
+    <div class="message message-success">
+      {{ mess }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <!-- <img src="./images/logo.png" alt="logo"> -->
+                    <h2>Leave<span>Mate</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="/admin_page" class="onclickf" id="button1">
+                    <i class="material-icons">dashboard</i>
+                    <h3>Dashboard</h3>
+                </a>
+                
+                <a href="/leave_status_pending" class="active onclickf" id="button3">
+                    <i class="material-icons">add_circle</i>
+                    <h3>Leave Status</h3>
+                </a>
+
+                <a href="/student_data" class="onclickf" id="button3">
+                    <i class="material-icons">analytics</i>
+                    <h3>Student Data</h3>
+                </a>
+
+                <a href="/faculty_data" class="onclickf" id="button3">
+                    <i class="material-icons">analytics</i>
+                    <h3>Faculty Data</h3>
+                </a>
+
+                <a href="/ta_data" class="onclickf" id="button3">
+                    <i class="material-icons">analytics</i>
+                    <h3>TA Data</h3>
+                </a>
+
+                <a href="/logout" class="onclickf" id="button7">
+                  <i class="material-icons">logout</i>
+                  <h3>Logout</h3>
+                </a>
+            </div> 
+        </aside>
+
+        <div class="middle">
+
+                <div class="heading">
+                    <div class="content"><h2>Leave Status</h2></div>
+                    <div class="right-top">
+                        <button id="menu-btn">
+                            <i class="material-icons">menu</i>
+                        </button>
+                        <div class="theme-toggler">
+                            <i class="material-icons active">light_mode</i>
+                            <i class="material-icons">dark_mode</i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                  <div class="tab">
+                    <button class="tablinks" onclick="redirectToPending()">Pending</button>
+                    <button class="tablinks" onclick="status(event, 'Approved')">Approved</button>
+                    <button class="tablinks" onclick="redirectToRejected()">Rejected</button>
+                  </div>
+                  
+                  <!-- Tab content -->
+                  
+                  <div id="Approved" class="tabcontent">
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Leave Type</th>
+                                <th>Leave Duration</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Reason</th>
+                                <th>Role</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leave in reply %}
+                                {% if leave.status == "approved" %}
+                                <tr>
+                                    <td>{{leave.id}}</td>
+                                    <td>{{leave.name}}</td>
+                                    <td>{{leave.leave_type}}</td>
+                                    <td>{{leave.leave_duration}}</td>
+                                    <td>{{leave.from_date}}</td>
+                                    <td>{{leave.to_date}}</td>
+                                    <td>{{leave.reason}}</td>
+                                    <td>{{leave.role}}</td>
+                                    <td>
+                                        <!-- <button class="reject"><i class="material-icons">close</i></button> -->
+
+                                        <button class="reject"><i class="material-icons" onclick="window.location.href='approved_to_rejected/{{leave.oid}}/'"> close</i></button>
+
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+        </div>
+
+        <!-- <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <i class="material-icons">menu</i>
+                </button>
+                <div class="theme-toggler">
+                    <i class="material-icons active">light_mode</i>
+                    <i class="material-icons">dark_mode</i>
+                </div>
+                
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{user.name}}</b></p>
+                        <small class="text-muted">{{user.email}}</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="" alt="profile-photo">
+                    </div>
+                </div>
+            </div> -->
+
+        
+
+    </div>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/leave-status.js' %}"></script>
+</body>
+</html>    

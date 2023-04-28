@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Material icons cdn  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static '/css/faculty.css' %}">
+    <title>Dashboard</title>
+</head>
+{% if messages %}
+<div class="messages" id="msg">
+  {% for mess in messages %}
+    <div class="message message-success">
+      {{ mess }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <!-- <img src="./images/logo.png" alt="logo"> -->
+                    <h2>Leave<span>Mate</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                    <a href="/" class="active onclickf" id="button1">
+                        <i class="material-icons">dashboard</i>
+                        <h3>Dashboard</h3>
+                    </a>
+                    
+                    <a href="/profile_page" class="onclickf" id="button2" onclick={onclickactive}>
+                        <i class="material-icons">person</i>
+                        <h3>Profile</h3>
+                    </a>
+                    
+                    <a href="/leaveform" class="onclickf" id="button3">
+                        <i class="material-icons">add_circle</i>
+                        <h3>Apply for Leave</h3>
+                    </a>
+                    
+                    <a href="/approved_leave_data" class="onclickf" id="button4">
+                        <i class="material-icons">import_contacts</i>
+                        <h3>Approved Leaves</h3>
+                    </a>
+                    
+                    <!-- <a href="#" class="onclickf" id="button5">
+                        <i class="material-icons">school</i>
+                        <h3>Courses</h3>
+                    </a> -->
+                    
+                    <!-- <a href="#" class="onclickf" id="button6">
+                        <i class="material-icons">settings</i>
+                        <h3>Settings</h3>
+                    </a> -->
+
+                    <a href="/logout" class="onclickf" id="button7">
+                      <i class="material-icons">logout</i>
+                      <h3>Logout</h3>
+                    </a>
+            </div> 
+        </aside>
+
+
+        <main>
+            <h1>Dashboard</h1>
+
+            <!-- <div class="date">
+                <input type="date">
+            </div> -->
+
+            <div class="insights">
+
+
+                <div class="attendence">
+                    <i class="material-icons">school</i>
+
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Leaves Days Taken</h3>
+                            <h1>{{user.nol}}</h1>
+                        </div>
+                        <div class="progress">
+                            <div class="number">
+                                <!-- <p>81%</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <small class="text-muted">Out of : 150</small> -->
+                </div>
+
+                <div class="leave">
+                    <i class="material-icons">star</i>
+
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Leave Taken</h3>
+                            <h1>{{user.nol}}</h1>
+                        </div>
+                        <div class="progress">
+                            <div class="number">
+                                <p id="leaves_percent" style="font-size: 25px; color: #ff7782;"></p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <small>At max 30 leaves are allowed</small>
+                </div>
+
+                <div class="leave-month">
+                    <i class="material-icons">star_half</i>
+
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Leave hours</h3>
+                            <h2 id="leaves_hours"></h1>
+                        </div>
+                        <div class="progress">
+                            <div class="number">
+                                <!-- <p>81%</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <small class="text-muted">Out of : 150</small> -->
+                </div>
+
+            </div>
+
+
+            <div class="leave-status">
+
+                <h2>Leave Status</h2>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Leave Type</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leaves in leaves %}
+                            <tr>
+                                <td>{{leaves.leave_type}}</td>
+                                <td>{{leaves.from_date}}</td>
+                                <td>{{leaves.to_date}}</td>
+                                <td>{{leaves.reason}}</td>
+                                <td>{{leaves.status}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </Table>
+                <!-- <a href="#">Show All</a> -->
+            </div>
+        </main>
+
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <i class="material-icons">menu</i>
+                </button>
+                <div class="theme-toggler">
+                    <i class="material-icons active">light_mode</i>
+                    <i class="material-icons">dark_mode</i>
+                </div>
+                
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{user.name}}</b></p>
+                        <small class="text-muted">{{user.email}}</small>
+                    </div>
+                    <!-- <div class="profile-photo">
+                        <img src="" alt="profile-photo">
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="recent-updates">
+                <h2>Your Leave Status</h2>
+                
+                <div class="leave">
+                    <div class="approved">
+                        <div>
+                            <i class="material-icons">done</i>
+                        </div>
+
+                        <div class="middle">
+                            <div class="left">
+                                <h3>Approved Leave Requests</h3>
+                                <h1 id="approved_leaves"></h1>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="leave">
+                    <div class="rejected">
+                        <div>
+                            <i class="material-icons">close</i>
+                        </div>
+
+                        <div class="middle">
+                            <div class="left">
+                                <h3>Rejected Leave Requests</h3>
+                                <h1 id="rejected_leaves"></h1>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="leave">
+                    <div class="pending">
+                        <div>
+                            <i class="material-icons">refresh</i>
+                        </div>
+
+                        <div class="middle">
+                            <div class="left">
+                                <h3>Pending Leave Requests</h3>
+                                <h1 id="pending_leaves"></h1>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="../static/js/faculty.js"></script>
+    <script>
+       var user = JSON.parse('{{ nol_json|safe }}');
+        console.log(user)
+        var result = (user[0] / 30) * 100;
+        result = Math.round(result * 100) / 100;
+        document.getElementById("leaves_percent").innerHTML = `${result}%`;
+        document.getElementById("leaves_hours").innerHTML = `${user[0]*8} hours`;
+        document.getElementById("approved_leaves").innerHTML = `${user[1]}`;
+        document.getElementById("rejected_leaves").innerHTML = `${user[3]}`;
+        document.getElementById("pending_leaves").innerHTML = `${user[2]}`;
+        setTimeout(function(){
+            if ($('#msg').length > 0) {
+                $('#msg').remove();
+            }
+        }, 1500)    
+    </script>
+</body>
+</html>

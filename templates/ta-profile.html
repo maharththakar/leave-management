@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Material icons cdn  -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static '/css/profile.css' %}" />
+    <title>Profile page</title>
+  </head>
+  {% if messages %}
+  <div class="messages" id="msg">
+    {% for mess in messages %}
+    <div class="message message-success">{{ mess }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <body>
+    <div class="container">
+      <aside>
+        <div class="top">
+          <div class="logo">
+            <!-- <img src="./images/logo.png" alt="logo" /> -->
+            <h2>Leave<span>Mate</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <i class="material-icons">close</i>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a
+            href="/"
+            class="onclickf"
+            id="button1"
+          >
+            <i class="material-icons">dashboard</i>
+            <h3>Dashboard</h3>
+          </a>
+
+          <a
+            href="/profile_page"
+            class="active onclickf"
+            id="button2"
+            onclick="{onclickactive}"
+          >
+            <i class="material-icons">person</i>
+            <h3>Profile</h3>
+          </a>
+
+          <a href="/leaveform" class="onclickf" id="button3">
+            <i class="material-icons">add_circle</i>
+            <h3>Apply for Leave</h3>
+          </a>
+
+          <a href="/approved_leave_data" class="onclickf" id="button4">
+            <i class="material-icons">import_contacts</i>
+            <h3>Approved Leaves</h3>
+          </a>
+
+          <a href="/logout" class="onclickf" id="button7">
+            <i class="material-icons">logout</i>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </aside>
+      <div class="profile-container">
+        <div class="profile-page">
+          <h1 class="Profile">Profile</h1>
+          <div class="Profile_Picture">
+            <img src="https://cdn4.iconfinder.com/data/icons/back-to-school-flat-2/64/avatar_college_student_man_graduation-512.png" />
+          </div>
+          <div class="info">
+            <ul class="info-list">
+              <li>
+                <span class="title">Name:</span>
+                <span class="content">{{user.name}}</span>
+              </li>
+              <li>
+                <span class="title">Email:</span>
+                <span class="content">{{user.email}}</span>
+              </li>
+              <li>
+                <span class="title">Student ID:</span>
+                <span class="content">{{user.id}}</span>
+              </li>
+              <li>
+                <span class="title">Courses:</span>
+                <span class="content">
+                  {% for course in user.courses %}
+                  {{course}},
+                  {% endfor %}
+                </span>
+              </li>
+              <li>
+                <span class="title">Faculty:</span>
+                <span class="content">
+                  {% for faculty in user.faculties %}
+                  {{faculty}},
+                  {% endfor %}
+                </span>
+              </li>
+              {% comment %} <li>
+                <span class="title">TA:</span>
+                <span class="content">
+                  {% for ta in user.tas %}
+                  {{ta}},
+                  {% endfor %}
+                </span>
+              </li> {% endcomment %}
+            </ul>
+          </div>
+          <div class="submit">
+            <button class="Change-Pass-btn" onclick="goto()">Change Password</button>
+          </div>
+        </div>
+      </div>
+  
+
+      <div class="right">
+        <div class="top">
+          <button id="menu-btn">
+            <i class="material-icons">menu</i>
+          </button>
+          <div class="theme-toggler">
+            <i class="material-icons active">light_mode</i>
+            <i class="material-icons">dark_mode</i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="../static/js/faculty.js"></script>
+    <script>
+      setTimeout(function () {
+        if ($("#msg").length > 0) {
+          $("#msg").remove();
+        }
+      }, 1500); // 2000 millisecond
+      function goto(){
+        window.location.href = "/change_pass";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static '/css/leaveform.css' %}">
+    <!-- <link rel="stylesheet" href="../styles.css"> -->
+    <script>
+        setTimeout(function(){
+            if ($('#msg').length > 0) {
+                $('#msg').remove();
+            }
+        }, 1500)    // 2000 millisecond
+    </script>
+    <title>Leave Form</title>
+</head>
+{% if messages %}
+<div class="messages" id="msg"> 
+  {% for mess in messages %}
+    <div class="message message-success">
+      {{ mess }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- {% for message in messages %}
+    
+    <div class="alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+           {{ message }}
+    </div>
+
+{% endfor %} -->
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <!-- <img src="{% static '/images/logo.png' %}" alt="logo"> -->
+                    <h2>Leave<span>Mate</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                    <a href="/" class="onclickf" id="button1">
+                        <i class="material-icons">dashboard</i>
+                        <h3>Dashboard</h3>
+                    </a>
+                    
+                    <a href="/profile_page" class="onclickf" id="button2" onclick={onclickactive}>
+                        <i class="material-icons">person</i>
+                        <h3>Profile</h3>
+                    </a>
+                    
+                    <a href="#" class="onclickf active" id="button3">
+                        <i class="material-icons">add_circle</i>
+                        <h3>Apply for Leave</h3>
+                    </a>
+
+                    <!-- <a href="/approved_leave_data" class="onclickf" id="button4">
+                        <i class="material-icons">import_contacts</i>
+                        <h3>Approved Leaves</h3>
+                    </a> -->
+                    
+                    <!-- <a href="#" class="onclickf" id="button4">
+                        <i class="material-icons">import_contacts</i>
+                        <h3>Leave Status</h3>
+                    </a>
+                    
+                    <a href="#" class="onclickf" id="button5">
+                        <i class="material-icons">school</i>
+                        <h3>Courses</h3> -->
+                        <!-- <span class="message-count">26</span> -->
+                    <!-- </a> -->
+                    
+                    <!-- <a href="#" class="onclickf" id="button6">
+                        <i class="material-icons">settings</i>
+                        <h3>Settings</h3>
+                    </a> -->
+
+                    <a href="/logout" class="onclickf" id="button7">
+                        <i class="material-icons">logout</i>
+                        <h3>Logout</h3>
+                    </a>
+            </div> 
+        </aside>
+        <form action="/leaveform/" method="post">
+            {% csrf_token %}
+        <div class="middle">
+            <div class="heading">
+                <h2>Apply For Leave</h2>
+            </div>
+            <div class="type">
+                <div class="leave-types">
+                    <h3>LEAVE TYPE</h3>
+                    <select name="leave-type" id="leave-type" class="types">
+                        <option value="casual">Casual</option>
+                        <option value="personal">Personal</option>
+                        <option value="medical">Medical Issue</option>
+                        <option value="outstation">Outstation</option>
+                        <option value="study">Study Leave</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+                <div class="leave-time">
+                    <h3>DAY TYPE</h3>
+                    <select name="leave-duration" id="leave-duration" class="duration">
+                        <option value="full">Full Day</option>
+                        <!-- <option value="half">Half Day</option> -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Date Selection  -->
+
+            <div class="date">
+                <div class="from">
+                    <h3>FROM</h3>
+                    <input type="date" name="from-date" id="from-date" class="from-date" required>
+                </div>
+                <div class="to">
+                    <h3>TO</h3>
+                    <input type="date" name="to-date" id="to-date" class="to-date" required>
+                </div>
+            </div>
+
+            <!-- Reason  -->
+
+            <div class="reason">
+                <h3>DETAILED REASON WITH DRIVE LINK OF PROOF DOCUMENTS</h3>
+                <textarea name="reason" id="reason" cols="30" rows="10" class="reason-text" required></textarea>
+            </div>
+
+            <!-- Submit Button  -->
+
+            <div class="end">
+                <div class="submit">
+                    <button type="submit" class="submit-btn">Submit</button>
+                </div>
+                
+                <div class="cancel">
+                    <button>Cancel</button>
+                </div>
+            </div>
+        
+        </div>
+    </form>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <i class="material-icons">menu</i>
+                </button>
+                <div class="theme-toggler">
+                    <i class="material-icons active">light_mode</i>
+                    <i class="material-icons">dark_mode</i>
+                </div>
+                
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{user.name}}</b></p>
+                        <small class="text-muted">{{user.email}}</small>
+                    </div>
+                    <!-- <div class="profile-photo">
+                        <img src="" alt="profile-photo">
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="../static/js/leaveform.js"></script>
+</body>
+</html>

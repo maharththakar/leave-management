@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css"
+    />
+    <script>
+      setTimeout(function(){
+          if ($('#msg1').length > 0) {
+              $('#msg1').remove();
+          }
+      }, 1500)    // 2000 millisecond
+    </script>
+    <link rel="stylesheet" href="{% static '/css/styles.css' %}" />
+  </head>
+  {% if messages %}
+  <div class="messages" id="msg1">
+    {% for mess in messages %}
+      <div class="message message-warning">
+        {{ mess }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <body>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+      <div class="two-portion">
+        <div class="screen">
+          <div class="screen__content">
+            <form class="login" method="post">
+              {% csrf_token %}
+              <div class="login__field">
+                <i class="login__icon fas fa-user"></i>
+                {{ form.username }}
+              </div>
+              <div class="login__field">
+                <i class="login__icon fas fa-lock"></i>
+                {{ form.password }}
+              </div>
+              <button class="button login__submit">
+                <span class="button__text">Log In Now</span>
+                <i class="button__icon fas fa-chevron-right"></i>
+              </button>
+            </form>
+            
+          </div>
+          <div class="screen__background">
+            <span
+              class="screen__background__shape screen__background__shape4"
+            ></span>
+            <span
+              class="screen__background__shape screen__background__shape3"
+            ></span>
+            <span
+              class="screen__background__shape screen__background__shape2"
+            ></span>
+            <span
+              class="screen__background__shape screen__background__shape1"
+            ></span>
+          </div>
+        </div>
+        <div class="Right-part">
+		  <div class="Description2">
+            <h1 class="animated-text">LeaveMate</h1>
+          </div>
+		  <!-- <div class="Description1">
+            <h1>SYSTEM</h1>
+          </div> -->
+          <div class="Image">
+            <img src="{% static '/images/Login-img.png' %}" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- partial -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

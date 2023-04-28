@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Material icons cdn  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- css -->
+    <link rel="stylesheet" href=".{% static '/css/admin.css' %}">
+    <title>Dashboard</title>
+</head>
+{% if messages %}
+<div class="messages" id="msg">
+  {% for mess in messages %}
+    <div class="message message-success">
+      {{ mess }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <!-- <img src="https://thumbs.dreamstime.com/b/simple-clean-crisp-creative-lm-logo-icon-design-vector-format-170811491.jpg" alt="logo"> -->
+                    <h2>Leave<span>Mate</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="/admin_page" class="active onclickf" id="button1">
+                    <i class="material-icons">dashboard</i>
+                    <h3>Dashboard</h3>
+                </a>
+                
+                <a href="/leave_status_pending" class="onclickf" id="button3">
+                    <i class="material-icons">add_circle</i>
+                    <h3>Leave Status</h3>
+                </a>
+
+                <a href="/student_data" class="onclickf" id="button3">
+                    <i class="material-icons">analytics</i>
+                    <h3>Student Data</h3>
+                </a>
+
+                <a href="/faculty_data" class="onclickf" id="button3">
+                    <i class="material-icons">analytics</i>
+                    <h3>Faculty Data</h3>
+                </a>
+
+                <a href="/ta_data" class="onclickf" id="button3">
+                    <i class="material-icons">analytics</i>
+                    <h3>TA Data</h3>
+                </a>
+
+                <a href="/logout" class="onclickf" id="button7">
+                  <i class="material-icons">logout</i>
+                  <h3>Logout</h3>
+                </a>
+            </div> 
+        </aside>
+
+
+        <main>
+            <h1>Dashboard</h1>
+
+            <div>
+
+            <div class="insights">
+
+
+                <div class="attendence">
+                    <i class="material-icons">refresh</i>
+
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Pending Leaves</h3>
+                            <h1 id="pending_leaves"></h1>
+                        </div>
+                        <!-- <div class="progress">
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- <small class="text-muted">Out of : 150</small> -->
+                </div>
+
+                <div class="leave">
+                    <i class="material-icons">done</i>
+
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Approved Leaves</h3>
+                            <h1 id="approved_leaves"></h1>
+                        </div>
+                        <div class="progress">
+                            <div class="number">
+                                <!-- <p>81%</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <small class="text-muted">Out of : 150</small> -->
+                </div>
+
+                <div class="leave-month">
+                    <i class="material-icons">close</i>
+
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Rejected Leaves</h3>
+                            <h1 id="rejected_leaves"></h1>
+                        </div>
+                    </div>
+                    <!-- <small class="text-muted">Out of : 150</small> -->
+                </div>
+
+            </div>
+            
+            <form action="/admin_page" method="post">
+                    {% csrf_token %}
+                <div class="middle">
+
+                    <div class="heading">
+                        <h2>Create Account</h2>
+                    </div>
+
+                    <div class="first">
+                        <div class="name">
+                            <h3>Name</h3>
+                            <input type="text" id="name" placeholder="Name" name="name"> 
+                            <!-- name se leta hain backend me  -->
+                        </div>
+        
+                        <div class="id">
+                            <h3>ID</h3>
+                            <input type="number" id="id" placeholder="ID" name="id">
+                        </div>
+                    </div>
+                    
+                    <div class="role">
+                        <h3>Role</h3>
+                        <select name="role" id="role" class="types" name="role">
+                            <option value="student">Student</option>
+                            <option value="ta">TA</option>
+                            <option value="faculty">Faculty</option>
+                        </select>
+                    </div>
+
+                    <div class="second">
+                        <div class="enter-pass">
+                            <h3>Enter Password</h3>
+                            <input type="password" id="enter-pass" placeholder="Enter Password" name="enter-password"> 
+                            <!-- id se js mein jaega -->
+                        </div>
+
+                        <div class="confirm-pass">
+                            <h3>Confirm Password</h3>
+                            <input type="text" id="confirm-pass" placeholder="Confirm Password" name="confirm-password" onkeyup="checkPasswords()">
+                        </div>
+                    </div>
+                    <div id="error_message" style="color: red; font-size: 16px;"></div>  <!--inner html-->
+
+                    <div class="email">
+                        <h3>Email</h3>
+                        <input type="email" id="email" placeholder="Email" name="email">
+                    </div>
+
+                    <div class="courses">
+                        <h3>Courses</h3>
+                        <textarea name="courses" id="courses" cols="60" rows="5" class="courses-text" placeholder="Courses" required></textarea>
+                    </div>
+                    
+                    <div class="tas">
+                        <h3>TAs</h3>
+                        <textarea name="tas" id="tas" cols="60" rows="5" class="tas-text" placeholder="TAs" required></textarea>
+                    </div>
+        
+                    <div class="faculties">
+                        <h3>Faculties</h3>
+                        <textarea name="faculties" id="faculties" cols="60" rows="5" class="faculties-text" placeholder="Faculties" required></textarea>
+                    </div>
+        
+                    <!-- Submit Button  -->
+        
+                    <div class="end">
+                        <div class="submit">
+                            <button type="submit" class="submit-btn" id="myButton" disabled>Submit</button>
+                        </div>
+                        
+                        <div class="cancel">
+                            <button><a href="/admin_page" class="button">Cancel</a></button>
+                        </div>
+                    </div>
+                
+                </div>
+            </form>
+        </main>
+
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <i class="material-icons">menu</i>
+                </button>
+                <div class="theme-toggler">
+                    <i class="material-icons active">light_mode</i>
+                    <i class="material-icons">dark_mode</i>
+                </div>
+                
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{user.name}}</b></p>
+                        <small class="text-muted">{{user.email}}</small>
+                    </div>
+                    <!-- <div class="profile-photo">
+                        <img src="" alt="profile-photo">
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- <div class="recent-updates">
+                <h2>Recent Updates</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="profile-photo">
+                        </div>
+                        <div class="msg">
+                            <p><b>202006969</b> You were absent on 10/11/2069</p>
+                            <small class="text-muted"> 5 minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="profile-photo">
+                        </div>
+                        <div class="msg">
+                            <p><b>202006969</b> You were absent on 10/11/2069</p>
+                            <small class="text-muted"> 5 minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="profile-photo">
+                        </div>
+                        <div class="msg">
+                            <p><b>202006969</b> You were absent on 10/11/2069</p>
+                            <small class="text-muted"> 5 minutes ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="" alt="profile-photo">
+                        </div>
+                        <div class="msg">
+                            <p><b>202006969</b> You were absent on 10/11/2069</p>
+                            <small class="text-muted"> 5 minutes ago</small>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="../static/js/admin.js"></script>
+    <script>
+        var user = JSON.parse('{{ nol_json|safe }}');
+        console.log(user)
+         document.getElementById("approved_leaves").innerHTML = `${user[0]}`;
+         document.getElementById("rejected_leaves").innerHTML = `${user[2]}`;
+         document.getElementById("pending_leaves").innerHTML = `${user[1]}`;
+         setTimeout(function(){
+             if ($('#msg').length > 0) {
+                 $('#msg').remove();
+             }
+         }, 1500)
+         function checkPasswords() {
+            var password = document.getElementById("enter-pass").value;
+            var confirm_password = document.getElementById("confirm-pass").value;
+            var error_message = document.getElementById("error_message");
+            
+            if (password != confirm_password) {
+                error_message.innerHTML = "Passwords do not match";
+                document.getElementById("myButton").disabled = true;
+            } else {
+                error_message.innerHTML = "";
+                document.getElementById("myButton").disabled = false;
+            }
+        } 
+     </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+web: gunicorn student_leave_and_taship_management.wsgi --log-file -
