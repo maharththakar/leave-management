@@ -130,7 +130,7 @@
 
             </div>
             
-            <form action="/admin_page" method="post">
+            <form action="/admin_page" method="post" onsubmit="return validateForm()">
                     {% csrf_token %}
                 <div class="middle">
 
@@ -141,13 +141,18 @@
                     <div class="first">
                         <div class="name">
                             <h3>Name</h3>
-                            <input type="text" id="name" placeholder="Name" name="name" required> 
+                            <input type="text" id="name" placeholder="Name" name="name" maxlength="30" required> 
                             <!-- name se leta hain backend me  -->
                         </div>
         
                         <div class="id">
                             <h3>ID</h3>
-                            <input type="number" id="id" placeholder="ID" name="id" required>
+                             <!-- <input type="number" id="idid" placeholder="ID" name="id" min="1" max="9999999999" pattern="\d+" onkeyup="checkId()" -->
+                              <!-- required> -->
+                              <input type="number" id="idid" placeholder="ID" name="id" min="1" max="9999999999" onkeyup="checkId()" required>
+                              <div>
+                                <span id="error_message_id" style="color: red;"></span>
+                            </div>
                         </div>
                     </div>
                     
@@ -163,7 +168,7 @@
                     <div class="second">
                         <div class="enter-pass">
                             <h3>Enter Password</h3>
-                            <input type="password" id="enter-pass" placeholder="Enter Password" name="enter-password"required onkeyup="requirement()"> 
+                            <input type="password" id="enter-pass" placeholder="Enter Password" name="enter-password" required onkeyup="requirement()"> 
                         </div>
                        
 
@@ -183,30 +188,30 @@
                        
                     </div>
                     <div>
-                        <span id="error_message_email" style="color: red;"></span>
+                        <span id="error_message_email" style="color: red; font-size: 16px;"></span>
                     </div>
                     
 
                     <div class="courses">
                         <h3>Courses</h3>
-                        <textarea name="courses" id="courses" cols="60" rows="5" class="courses-text" placeholder="Courses" required></textarea>
+                        <textarea name="courses" id="courses" cols="60" rows="5" class="courses-text" placeholder="Courses" maxlength="100" required></textarea>
                     </div>
                     
                     <div class="tas">
                         <h3>TAs</h3>
-                        <textarea name="tas" id="tas" cols="60" rows="5" class="tas-text" placeholder="TAs" required></textarea>
+                        <textarea name="tas" id="tas" cols="60" rows="5" class="tas-text" placeholder="TAs" maxlength="100" required></textarea>
                     </div>
         
                     <div class="faculties">
                         <h3>Faculties</h3>
-                        <textarea name="faculties" id="faculties" cols="60" rows="5" class="faculties-text" placeholder="Faculties" required></textarea>
+                        <textarea name="faculties" id="faculties" cols="60" rows="5" class="faculties-text" placeholder="Faculties" maxlength="100" required></textarea>
                     </div>
         
                     <!-- Submit Button  -->
         
                     <div class="end">
                         <div class="submit">
-                            <button type="submit" class="submit-btn" id="myButton" disabled>Submit</button>
+                            <button type="submit" class="submit-btn" id="myButton" >Submit</button>
                         </div>
                         
                         <div class="cancel">
@@ -277,7 +282,7 @@
 
         function validate_email() {
             var email = document.getElementById("email").value;
-            var error_message = document.getElementById("error_message");
+            var error_message = document.getElementById("error_message_email");
             var text;
             var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -324,10 +329,26 @@
             }
         }
 
+        function checkId() {
+            var id = document.getElementById("idid").value;
+            // if(id <0)
+            // {
+            //     document.getElementById("idid").value = "";
+            //     document.getElementById("error_message_id").innerHTML = "Negative values not allowed";
+            // }
+             if (id >= 0 && id <= 9999999999) {
+                document.getElementById("idid").value = id;
+                document.getElementById("error_message_id").innerHTML = "";
+            } 
+            else {
+                document.getElementById("idid").value = "";
+                document.getElementById("error_message_id").innerHTML = "Length should be at max 10 digits";
+            }
+        }
+
         
 
-
-
+     
 
 
         
