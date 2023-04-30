@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, reverse
 from .forms import SignUpForm, LoginForm
-from django.http import JsonResponse
+# from django.http import JsonResponse
 from django.contrib import messages
 from bson.objectid import ObjectId
-from django.core.mail import EmailMessage
+# from django.core.mail import EmailMessage
 from django.shortcuts import render
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.core.mail import send_mail
 from pymongo import MongoClient
 from datetime import datetime
@@ -13,8 +13,8 @@ import json
 import pymongo
 from decouple import config
 from django.contrib.auth.hashers import make_password, check_password
-from django.http import JsonResponse
-from dns import resolver, exception
+# from django.http import JsonResponse
+# from dns import resolver, exception
 
 client = MongoClient(
     config('MONGO_URI'))
