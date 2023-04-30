@@ -533,6 +533,11 @@ def admin_page(request):
 
         if role == "student":
             studenttable = db["student info"]
+            reply = studenttable.find_one({"email": email})
+            print(reply)
+            if reply:
+                messages.error(request, "Student already exists!")
+                return redirect("/admin_page")
             studenttable.insert_one(
                 {
                     "name": name,
@@ -549,6 +554,10 @@ def admin_page(request):
 
         elif role == "faculty":
             facultytable = db["faculty info"]
+            reply = facultytable.find_one({"email": email})
+            if reply:
+                messages.error(request, "Faculty already exists!")
+                return redirect("/admin_page")
             facultytable.insert_one(
                 {
                     "name": name,
@@ -565,6 +574,10 @@ def admin_page(request):
 
         elif role == "ta":
             tatble = db["ta info"]
+            reply = tatble.find_one({"email": email})
+            if reply:
+                messages.error(request, "TA already exists!")
+                return redirect("/admin_page")
             tatble.insert_one(
                 {
                     "name": name,
