@@ -163,9 +163,9 @@
                     <div class="second">
                         <div class="enter-pass">
                             <h3>Enter Password</h3>
-                            <input type="password" id="enter-pass" placeholder="Enter Password" name="enter-password"required> 
-                            <!-- id se js mein jaega -->
+                            <input type="password" id="enter-pass" placeholder="Enter Password" name="enter-password"required onkeyup="requirement()"> 
                         </div>
+                       
 
                         <div class="confirm-pass">
                             <h3>Confirm Password</h3>
@@ -173,6 +173,9 @@
                         </div>
                     </div>
                     <div id="error_message" style="color: red; font-size: 16px;"></div>  <!--inner html-->
+                    <div>
+                        <span id="error_message_pass" style="color: red;"></span>
+                    </div>
 
                     <div class="email">
                         <h3>Email</h3>
@@ -237,46 +240,7 @@
                 </div>
             </div>
 
-            <!-- <div class="recent-updates">
-                <h2>Recent Updates</h2>
-                <div class="updates">
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="" alt="profile-photo">
-                        </div>
-                        <div class="msg">
-                            <p><b>202006969</b> You were absent on 10/11/2069</p>
-                            <small class="text-muted"> 5 minutes ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="" alt="profile-photo">
-                        </div>
-                        <div class="msg">
-                            <p><b>202006969</b> You were absent on 10/11/2069</p>
-                            <small class="text-muted"> 5 minutes ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="" alt="profile-photo">
-                        </div>
-                        <div class="msg">
-                            <p><b>202006969</b> You were absent on 10/11/2069</p>
-                            <small class="text-muted"> 5 minutes ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="" alt="profile-photo">
-                        </div>
-                        <div class="msg">
-                            <p><b>202006969</b> You were absent on 10/11/2069</p>
-                            <small class="text-muted"> 5 minutes ago</small>
-                        </div>
-                    </div>
-                </div> -->
+            
             </div>
         </div>
     </div>
@@ -313,7 +277,7 @@
 
         function validate_email() {
             var email = document.getElementById("email").value;
-            var error_message = document.getElementById("error_message_email");
+            var error_message = document.getElementById("error_message");
             var text;
             var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -324,6 +288,39 @@
             } else {
                 error_message.innerHTML = "Invalid Email";
                 document.getElementById("myButton").disabled = true;
+            }
+        }
+
+        function requirement() {
+            var password = document.getElementById("enter-pass").value;
+            var regex_length = /^.{8,15}$/;
+            var regex_capital = /[A-Z]/;
+            var regex_special = /[!@#$%^&*(),.?":{}|<>]/;
+            var regex_number = /[0-9]/;
+            var error_message_pass = document.getElementById("error_message_pass")
+            if (!regex_length.test(password)) {
+                error_message_pass.innerHTML = "Password should be between 8 and 15 characters";
+                myButton.disabled = true;
+            }
+             else if (!regex_capital.test(password)) 
+             {
+                error_message_pass.innerHTML = "Password should contain at least one capital letter";
+                myButton.disabled = true;
+            }
+             else if (!regex_special.test(password)) 
+             {
+                error_message_pass.innerHTML = "Password should contain at least one special character";
+                myButton.disabled = true;
+            }
+            else if (!regex_number.test(password)) 
+            {
+                error_message_pass.innerHTML = "Password should contain at least one number";
+                myButton.disabled = true;
+            }
+            else 
+            {
+                error_message_pass.innerHTML = "";
+                myButton.disabled = false;
             }
         }
 
