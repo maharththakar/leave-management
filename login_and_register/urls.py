@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.urls import path
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -28,5 +29,7 @@ urlpatterns = [
      path('student_data', views.student_data,name='student_data'),
      path('ta_data', views.ta_data,name='ta_data'),
      path('faculty_data', views.faculty_data,name='faculty_data'),
+     path('change_password',views.change_password,name='change_password'),
      path('change_pass', views.change_pass,name='change_pass'),
+
 ]

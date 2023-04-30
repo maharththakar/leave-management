@@ -61,6 +61,11 @@
                     <h3>TA Data</h3>
                 </a>
 
+                <a href="/change_password" class="onclickf" id="button3">
+                    <i class="material-icons">analytics</i>
+                    <h3>Change Password</h3>
+                </a>
+
                 <a href="/logout" class="onclickf" id="button7">
                   <i class="material-icons">logout</i>
                   <h3>Logout</h3>
@@ -171,8 +176,13 @@
 
                     <div class="email">
                         <h3>Email</h3>
-                        <input type="email" id="email" placeholder="Email" name="email">
+                        <input type="email" id="email" placeholder="Email" name="email" onkeyup="validate_email()">
+                       
                     </div>
+                    <div>
+                        <span id="error_message" style="color: red;"></span>
+                    </div>
+                    
 
                     <div class="courses">
                         <h3>Courses</h3>
@@ -300,6 +310,31 @@
                 document.getElementById("myButton").disabled = false;
             }
         } 
+
+        function validate_email() {
+            var email = document.getElementById("email").value;
+            var error_message = document.getElementById("error_message");
+            var text;
+            var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
+            if (email.match(pattern)) {
+                error_message.innerHTML = "";
+                document.getElementById("myButton").disabled = false;
+            } else {
+                error_message.innerHTML = "Invalid Email";
+                document.getElementById("myButton").disabled = true;
+            }
+        }
+
+        
+
+
+
+
+
+        
+
      </script>
 </body>
 </html>
