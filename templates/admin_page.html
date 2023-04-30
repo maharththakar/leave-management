@@ -141,19 +141,19 @@
                     <div class="first">
                         <div class="name">
                             <h3>Name</h3>
-                            <input type="text" id="name" placeholder="Name" name="name"> 
+                            <input type="text" id="name" placeholder="Name" name="name" required> 
                             <!-- name se leta hain backend me  -->
                         </div>
         
                         <div class="id">
                             <h3>ID</h3>
-                            <input type="number" id="id" placeholder="ID" name="id">
+                            <input type="number" id="id" placeholder="ID" name="id" required>
                         </div>
                     </div>
                     
                     <div class="role">
                         <h3>Role</h3>
-                        <select name="role" id="role" class="types" name="role">
+                        <select name="role" id="role" class="types" name="role" required>
                             <option value="student">Student</option>
                             <option value="ta">TA</option>
                             <option value="faculty">Faculty</option>
@@ -163,7 +163,7 @@
                     <div class="second">
                         <div class="enter-pass">
                             <h3>Enter Password</h3>
-                            <input type="password" id="enter-pass" placeholder="Enter Password" name="enter-password"> 
+                            <input type="password" id="enter-pass" placeholder="Enter Password" name="enter-password"required> 
                             <!-- id se js mein jaega -->
                         </div>
 
@@ -176,11 +176,11 @@
 
                     <div class="email">
                         <h3>Email</h3>
-                        <input type="email" id="email" placeholder="Email" name="email" onkeyup="validate_email()">
+                        <input type="email" id="email" placeholder="Email" name="email" required onkeyup="validate_email()">
                        
                     </div>
                     <div>
-                        <span id="error_message" style="color: red;"></span>
+                        <span id="error_message_email" style="color: red;"></span>
                     </div>
                     
 
@@ -313,7 +313,7 @@
 
         function validate_email() {
             var email = document.getElementById("email").value;
-            var error_message = document.getElementById("error_message");
+            var error_message = document.getElementById("error_message_email");
             var text;
             var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
